@@ -1,3 +1,5 @@
+# intended only for new, empty folders
+
 rm package.json package-lock.json
 rm -rf node_modules
 rm -rf ds-core

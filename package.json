@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "@baloise/ds-core": "^16.1.0"
+    "@baloise/ds-core": "16.1.0"
   }
 }

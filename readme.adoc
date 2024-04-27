@@ -4,10 +4,17 @@
 = curl and maven:
 
 - use curl to recursively download design system files from jsdelivery
+  wget --no-parent -r https://cdn.jsdelivr.net/npm/@baloise/ds-core@16.1.0/dist/
 - create a webjar from the downloaded files and put it to nexus
 
 => download takes very long since it is a lot of files -> does not feel right
 
 = npm install and maven:
+
 - use npm install with a package.json including the design system
-- 
+- use a pom.xml including a webjar plugin for packaging the node_modules folder
+
+== Build
+
+- npm install
+
