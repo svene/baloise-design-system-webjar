@@ -42,11 +42,6 @@
                             <resources>
                                 <resource>
                                     <directory>node_modules</directory>
-<!--
-                                    <includes>
-                                        <include>foo.txt</include>
-                                    </includes>
--->
                                 </resource>
                             </resources>
                         </configuration>

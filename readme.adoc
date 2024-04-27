@@ -1,20 +1,54 @@
-= Ideas:
+= Idea
+
+Create a webjar from the node_modules folder created from a singele package-json dependency: "@baloise/ds-core": "16.1.0"
 
 
-= curl and maven:
+== steps
 
-- use curl to recursively download design system files from jsdelivery
-  wget --no-parent -r https://cdn.jsdelivr.net/npm/@baloise/ds-core@16.1.0/dist/
-- create a webjar from the downloaded files and put it to nexus
-
-=> download takes very long since it is a lot of files -> does not feel right
-
-= npm install and maven:
-
-- use npm install with a package.json including the design system
-- use a pom.xml including a webjar plugin for packaging the node_modules folder
+- use npm install with a package.json having the design system dependency
+- use maven with a pom.xml to create a jar from the node_modules folder
 
 == Build
 
 - npm install
+- mvn clean install
 
+Now the webjar can be consumed like this:
+
+
+.pom.xml
+[source,xml]
+----
+...
+<dependency>
+    <groupId>org.svenehrke.webjars</groupId>
+    <artifactId>baloise-design-system</artifactId>
+    <version>16.1.0</version>
+</dependency>
+...
+----
+
+.html file
+[source,html]
+----
+...
+<head>
+	<link rel="stylesheet" href="/webjars/baloise-design-system/16.1.0/@baloise/ds-styles/css/all.min.css" />
+	<script type="module" src="/webjars/baloise-design-system/16.1.0/@baloise/ds-core/dist/baloise-design-system/baloise-design-system.esm.js"></script>
+	<script nomodule src="/webjars/baloise-design-system/16.1.0/@baloise/ds-core/dist/baloise-design-system/baloise-design-system.js"></script>
+</head>
+...
+----
+
+== Alternatives
+
+=== wget
+
+Instead of `npm install` I tried to use wget to recursively download design system files from jsdelivery as follows:
+
+----
+wget --no-parent -r https://cdn.jsdelivr.net/npm/@baloise/ds-core@16.1.0/dist/
+----
+
+It turned out that the download takes very long since it is a lot of files.
+In addition it simply does not feel right.
