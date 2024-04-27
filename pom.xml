@@ -1,0 +1,59 @@
+wget --no-parent -r https://cdn.jsdelivr.net/npm/@baloise/ds-core@16.1.0/dist/
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>com.example</groupId>
+    <artifactId>jsdelivr-to-webjar</artifactId>
+    <version>1.0.0</version>
+    
+    <properties>
+        <jsdelivr.library>@baloise/ds-core</jsdelivr.library><!-- Replace with the name of the library on jsDelivr -->
+        <jsdelivr.version>1.0.0</jsdelivr.version><!-- Replace with the version of the library -->
+    </properties>
+    
+    <build>
+        <plugins>
+            <!-- Download files from jsDelivr -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>download-jsdelivr-files</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>curl</executable><!-- Assuming curl is installed -->
+                            <arguments>
+                                <argument>-o</argument>
+                                <argument>${project.build.directory}/${jsdelivr.library}-${jsdelivr.version}.zip</argument>
+
+                            <!-- https://cdn.jsdelivr.net/npm/@baloise/ds-core@16.1.0/dist/html.html-data.json -->
+                                <argument>https://cdn.jsdelivr.net/npm/${jsdelivr.library}@${jsdelivr.version}/dist/${jsdelivr.library}-${jsdelivr.version}.zip</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <!-- Create WebJar -->
+            <plugin>
+                <groupId>org.webjars</groupId>
+                <artifactId>webjars-locator-core</artifactId>
+                <version>0.47</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
